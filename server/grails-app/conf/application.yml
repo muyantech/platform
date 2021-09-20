@@ -1,0 +1,313 @@
+server:
+  undertow:
+    worker-threads: 10
+    io-threads: 2
+    direct-buffers: true
+    buffer-size: 32768
+
+grails:
+  controllers:
+    upload:
+      maxFileSize: 10485760
+      maxRequestSize: 10485760
+  # add Access-Control-Allow-Origin '*'
+  cors:
+    enabled: true
+    allowedOrigins:
+      - http://clokmpre.agileage.com
+      - http://clokmpre.agileage.com:3000
+      - http://clokmpre.boe.com.cn
+      - http://clokmpre.boe.com.cn:3000
+      - http://muyan.agileage.com
+      - http://muyan.agileage.com:3000
+      - http://aecc.agileage.com
+      - http://aecc.agileage.com:3000
+      - https://muyan.muyan.cloud
+      - https://aecc.muyan.cloud
+      - https://clokmpre.muyan.cloud
+      - http://clokmpre.tddage.com
+      - https://clokmpre.tddage.com
+      - http://aecc.tddage.com
+      - https://aecc.tddage.com
+      - http://muyan.tddage.com
+      - https://muyan.tddage.com
+    allowCredentials: true
+  profile: rest-api
+  codegen:
+    defaultPackage: tech.muyan
+  gorm:
+    multiTenancy:
+      mode: DISCRIMINATOR
+      tenantResolverClass: tech.muyan.multitenancy.FallbackDefaultSourceSubDomainTenantResolver
+    failOnError: true
+    reactor:
+      # Whether to translate GORM events into Reactor events
+      # Disabled by default for performance reasons
+      events: false
+
+  plugin:
+    springsecurity:
+      rest:
+        token:
+          generation:
+            jwt:
+              algorithm: HS256
+
+          storage:
+            jwt:
+              secret: QWERTYUIOPlkjhgfdsazxcvbnMKJHGVB
+
+info:
+  app:
+    name: '@info.app.name@'
+    version: '@info.app.version@'
+    grailsVersion: '@info.app.grailsVersion@'
+spring:
+  jmx:
+    unique-names: true
+  main:
+    banner-mode: "console"
+  groovy:
+    template:
+      check-template-location: false
+  servlet:
+    multipart:
+      enabled: true
+  devtools:
+    restart:
+      additional-exclude:
+        - '*.gsp'
+        - '**/*.gsp'
+        - '*.gson'
+        - '**/*.gson'
+        - 'logback.groovy'
+        - '*.properties'
+    add-properties: false
+management:
+  endpoints:
+    enabled-by-default: true
+
+---
+grails:
+  mime:
+    disable:
+      accept:
+        header:
+          userAgents:
+            - Gecko
+            - WebKit
+            - Presto
+            - Trident
+    types:
+      json:
+        - application/json
+        - text/json
+      hal:
+        - application/hal+json
+        - application/hal+xml
+      xml:
+        - text/xml
+        - application/xml
+      atom: application/atom+xml
+      css: text/css
+      csv: text/csv
+      js: text/javascript
+      rss: application/rss+xml
+      text: text/plain
+      all: '*/*'
+  urlmapping:
+    cache:
+      maxsize: 1000
+  controllers:
+    defaultScope: singleton
+  converters:
+    encoding: UTF-8
+
+hibernate:
+  generate_statistics: true
+  cache:
+    # Caches all dynamic finder queries
+    queries: true # This implicitly sets  `use_query_cache=true`
+    use_query_cache: true
+    use_second_level_cache: true
+    region_prefix: "hibernate"
+    region:
+       factory_class: org.redisson.hibernate.RedissonRegionFactory
+    redisson:
+      config: redisson.yml
+
+dataSource:
+  pooled: true
+  jmxExport: true
+  driverClassName: org.h2.Driver
+  username: sa
+  password: ''
+  properties:
+    jmxEnabled: true
+    initialSize: 10
+    maxActive: 15
+    minIdle: 0
+    maxIdle: 0
+    maxWait: 10000
+    maxAge: 600000
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 60000
+    validationQuery: SELECT 1
+    validationQueryTimeout: 3
+    validationInterval: 15000
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: false
+    jdbcInterceptors: ConnectionState
+    defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+  hikari:
+    minimumIdle: 5
+    maximumPoolSize: 20
+    idleTimeout: 30000
+    maxLifetime: 2000000
+    connectionTimeout: 30000
+    poolName: HikariPoolBooks
+
+environments:
+  # dbCreate: one of 'create-drop', 'create', 'update' or 'validate'
+  #
+  # create - Drops the existing schema and creates the schema on startup, dropping existing tables, indexes, etc. first.
+  # create-drop - Same as create, but also drops the tables when the application shuts down cleanly.
+  # update - Creates missing tables and indexes, and updates the current schema without dropping any tables or data.
+  #          Note that this can’t properly handle many schema changes like column renames
+  #          (you’re left with the old column containing the existing data).
+  # validate - Makes no changes to your database. Compares the configuration with the existing database schema and reports warnings.
+
+  development:
+    attachment:
+      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
+      storageEngine: ${STORAGE_ENGINE:LOCAL_FILE}
+      s3Compatible:
+        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
+        bucketName: muyan-cs-development-app
+        region: us-east-1
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      local:
+        folder: ${LOCAL_FILE_FOLDER:/tmp}
+    seedData:
+      folder: ${SEED_DATA_FOLDER:/tmp}
+    dataSource:
+      dbCreate: update
+      logSql: false
+      formatSql: true
+      # url: jdbc:h2:file:/${H2_DB_DATA_PATH}/devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+      # dialect: org.hibernate.dialect.H2Dialect
+      driverClassName: org.postgresql.Driver
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      url: ${JDBC_DATABASE_URL:jdbc:postgresql://database:5432/<product_name>_dev}
+      username: ${JDBC_DATABASE_USERNAME:postgres}
+      password: ${JDBC_DATABASE_PASSWORD:password}
+
+  # Test profile is used on CI/CD automation unit test,
+  # so use embedded H2 database as simple resolution without depend on other component.
+  test:
+    seedData:
+      folder: /tmp
+    dataSource:
+      dbCreate: create-drop
+      logSql: false
+      formatSql: false
+      driverClassName: org.postgresql.Driver
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      url: ${JDBC_TEST_DATABASE_URL:jdbc:postgresql://localhost:5432/<product_name>_test}
+      username: ${JDBC_TEST_DATABASE_USERNAME:postgres}
+      password: ${JDBC_TEST_DATABASE_PASSWORD:password}
+
+  review:
+    attachment:
+      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
+      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      s3Compatible:
+        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
+        bucketName: muyan-cs-review-app
+        region: us-east-1
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      local:
+        folder: ${LOCAL_FILE_FOLDER:/tmp}
+    seedData:
+      folder: ${SEED_DATA_FOLDER:/app/data}
+    dataSource:
+      dbCreate: update
+      url: ${JDBC_DATABASE_URL}
+      username: ${JDBC_DATABASE_USERNAME}
+      password: ${JDBC_DATABASE_PASSWORD}
+      driverClassName: org.postgresql.Driver
+      logSql: false
+      formatSql: false
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  staging:
+    attachment:
+      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
+      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      s3Compatible:
+        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
+        bucketName: muyan-cs-staging-app
+        region: us-east-1
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      local:
+        folder: ${LOCAL_FILE_FOLDER:/tmp}
+    seedData:
+      folder: ${SEED_DATA_FOLDER:/app/data}
+    dataSource:
+      dbCreate: update
+      url: ${JDBC_DATABASE_URL}
+      username: ${JDBC_DATABASE_USERNAME}
+      password: ${JDBC_DATABASE_PASSWORD}
+      driverClassName: org.postgresql.Driver
+      logSql: false
+      formatSql: false
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  production:
+    attachment:
+      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
+      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      s3Compatible:
+        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
+        bucketName: muyan-cs-production-app
+        region: us-east-1
+      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
+      local:
+        folder: ${LOCAL_FILE_FOLDER:/tmp}
+    seedData:
+      folder: ${SEED_DATA_FOLDER:/app/data}
+    dataSource:
+      dbCreate: update
+      url: ${JDBC_DATABASE_URL}
+      username: ${JDBC_DATABASE_USERNAME}
+      password: ${JDBC_DATABASE_PASSWORD}
+      driverClassName: org.postgresql.Driver
+      logSql: false
+      formatSql: false
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      properties:
+        jmxEnabled: true
+        initialSize: 5
+        maxActive: 50
+        minIdle: 5
+        maxIdle: 25
+        maxWait: 10000
+        maxAge: 600000
+        timeBetweenEvictionRunsMillis: 5000
+        minEvictableIdleTimeMillis: 60000
+        validationQuery: SELECT 1
+        validationQueryTimeout: 3
+        validationInterval: 15000
+        testOnBorrow: true
+        testWhileIdle: true
+        testOnReturn: false
+        jdbcInterceptors: ConnectionState
+        defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED

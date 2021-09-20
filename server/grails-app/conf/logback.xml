@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%clr(%d{MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%15.15t]){faint} %clr(%class.%method){faint} %clr([%file:%line]){faint} %n%m%n%wex
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLBAR" class="com.rollbar.logback.RollbarAppender">
+        <accessToken>${EM_ACCESS_TOKEN}</accessToken>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <environment>${GRAILS_ENV}</environment>
+        <enabled>${EM_ENABLE}</enabled>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLBAR"/>
+    </root>
+
+    <logger name="org.hibernate" level="error" />
+    <logger name="org.springframework" level="error" />
+    <springProfile name="development">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+        </root>
+        <logger name="tech.muyan" level="debug" />
+        <logger name="org.hibernate" level="error" />
+        <logger name="org.hibernate.SQL" level="info" />
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="info" />
+        <logger name="org.hibernate.engine.internal" level="warn" />
+        <logger name="grails.plugin.springsecurity.rest" level="error" />
+        <logger name="org.springframework.security" level="error" />
+        <logger name="org.springframework" level="error" />
+        <logger name="org.grails.config" level="error" />
+    </springProfile>
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+</configuration>

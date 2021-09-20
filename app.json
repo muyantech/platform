@@ -1,0 +1,80 @@
+{
+  "name": "Product based on muyan agile development platform",
+  "description": "Product based on muyan agile development platform",
+  "buildpacks": [
+    {
+      "url": "heroku/gradle"
+    },
+    {
+      "url": "https://github.com/muyantech/openj9-buildpack"
+    },
+    {
+      "url": "heroku-community/cli"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql:basic"
+    },
+    "logtail:free",
+    "librato:development",
+    "heroku-redis:mini"
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-2x"
+    }
+  },
+  "stack": "heroku-22",
+  "environments": {
+    "review": {
+      "formation": {
+        "web": {
+          "quantity": 1,
+          "size": "standard-2x"
+        }
+      },
+      "addons": [
+        {
+          "plan": "heroku-postgresql:basic"
+        },
+        "logtail:free",
+        "librato:development",
+        "heroku-redis:mini"
+      ],
+      "env": {
+        "GRADLE_TASK": "-Dgrails.env=review stage",
+        "GRAILS_ENV": "review",
+        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss256k -Xmx768m",
+        "PAAS_VENDOR": "heroku",
+        "ES_APM_ENABLE": false,
+        "S3_ACCESS_KEY": "<S3_ACCESS_KEY>",
+        "S3_SECRET_KEY": "<S3_SECRET_KEY>",
+        "SEED_DATA_FOLDER": "/app/server/data",
+        "EM_ENABLE": true,
+        "EM_ACCESS_TOKEN": "<ELASTIC_IO_ACCESS_TOKEN>",
+      },
+      "scripts": {
+        "postdeploy": "export HEROKU_API_KEY=<HEROKU_API_KEY>; heroku redis:maxmemory --policy allkeys-lru --app $HEROKU_APP_NAME; heroku redis:timeout --seconds 60 --app $HEROKU_APP_NAME"
+      }
+    },
+    "test": {
+      "env": {
+        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss512k"
+      },
+      "addons": [
+        "heroku-postgresql:in-dyno"
+      ],
+      "scripts": {
+        "test": "export JDBC_TEST_DATABASE_URL=$JDBC_DATABASE_URL JDBC_TEST_DATABASE_USERNAME=$JDBC_DATABASE_USERNAME JDBC_TEST_DATABASE_PASSWORD=$JDBC_DATABASE_PASSWORD;./gradlew test integrationTest"
+      },
+      "formation": {
+        "test": {
+          "quantity": 1,
+          "size": "performance-l"
+        }
+      }
+    }
+  }
+}
