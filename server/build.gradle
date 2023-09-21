@@ -1,0 +1,145 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
+        classpath "org.grails.plugins:hibernate5:7.2.2"
+        classpath "org.grails.plugins:views-gradle:2.2.1"
+    }
+}
+
+version "0.1"
+group "tech.muyan"
+
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"war"
+apply plugin:"org.grails.grails-web"
+apply plugin:"org.grails.plugins.views-json"
+
+// muyan platform version
+def platformVersion = '0.25.0'
+
+repositories {
+    maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://steamcleaner.jfrog.io/artifactory/grails-plugins" }
+    maven { url "https://repository.aspose.com/repo/" }
+    mavenLocal()
+    maven {
+        url "https://maven.pkg.github.com/muyantech/grails-platform"
+        credentials {
+            username = "xqliu"
+            password = "56f5cfae5281a1f8af81bf4861063a52317c8a5c"
+        }
+    }
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+
+    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    //https://stackoverflow.com/questions/42275516/excluding-tomcat-dependencies-from-spring-boot-in-gradle
+    implementation.exclude module: 'spring-boot-starter-tomcat'
+    implementation.exclude group: 'org.apache.tomcat'
+}
+
+dependencies {
+    compileOnly "io.micronaut:micronaut-inject-groovy"
+    console "org.grails:grails-console"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.grails:grails-core"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+
+    //Replace tomcat by undertow to reduce memory usage
+    //https://objectpartners.com/2016/01/07/changed-the-embedded-server-in-grails-3/
+    //https://examples.javacodegeeks.com/enterprise-java/spring/tomcat-vs-jetty-vs-undertow-comparison-of-spring-boot-embedded-servlet-containers/
+    //compile "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation("org.springframework.boot:spring-boot-starter-websocket") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+    implementation "org.grails:grails-plugin-url-mappings"
+    implementation "org.grails:grails-plugin-rest"
+    implementation "org.grails:grails-plugin-codecs"
+    implementation "org.grails:grails-plugin-interceptors"
+    implementation "org.grails:grails-plugin-services"
+    implementation "org.grails:grails-plugin-datasource"
+    implementation "org.grails:grails-plugin-databinding"
+    implementation "org.grails:grails-web-boot"
+    implementation "org.grails:grails-logging"
+    implementation "org.grails.plugins:cache"
+    implementation "org.grails.plugins:async"
+    implementation "org.grails.plugins:hibernate5"
+    implementation "org.hibernate:hibernate-core:5.6.5.Final"
+    implementation "org.grails.plugins:events"
+    implementation "org.grails.plugins:views-json"
+    implementation "org.grails.plugins:views-json-templates"
+    profile "org.grails.profiles:rest-api"
+    runtimeOnly "org.glassfish.web:el-impl:2.2.1-b05"
+    runtimeOnly "com.h2database:h2"
+    runtimeOnly "org.apache.tomcat:tomcat-jdbc"
+    runtimeOnly "javax.xml.bind:jaxb-api:2.3.1"
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    testImplementation "org.grails:grails-gorm-testing-support"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation "org.grails:grails-web-testing-support"
+    testImplementation "org.grails:views-json-testing-support"
+    testImplementation "org.hibernate.validator:hibernate-validator:6.1.7.Final"
+
+    implementation "tech.muyan.platform:muyan-platform:$platformVersion"
+
+    //For quick file watch in development mode on macos
+    //Change to developmentOnly after upgrade to gradle 7.2
+    developmentOnly "net.java.dev.jna:jna:5.11.0"
+    developmentOnly "io.methvin:directory-watcher:0.15.1"
+    implementation "org.grails.plugins:spring-security-rest:3.0.1"
+}
+
+bootRun {
+    ignoreExitValue true
+    jvmArgs(
+        '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005',
+        '-Dspring.output.ansi.enabled=always', 
+        '-noverify', 
+        '-XX:TieredStopAtLevel=1',
+        '-Xmx2048m')
+    sourceResources sourceSets.main
+    String springProfilesActive = 'spring.profiles.active'
+    systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+}
+
+tasks.withType(GroovyCompile) {
+    configure(groovyOptions) {
+        forkOptions.jvmArgs = ['-Xmx1024m']
+    }
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+
+tasks.withType(JavaCompile) {
+    options.release = 11
+    options.encoding = 'UTF-8'
+}
+
+bootJar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
+}
+
+task stage(dependsOn: ['bootJar'])
