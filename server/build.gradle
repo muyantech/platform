@@ -94,7 +94,7 @@ dependencies {
     testImplementation "org.grails:views-json-testing-support"
     testImplementation "org.hibernate.validator:hibernate-validator:6.1.7.Final"
 
-    implementation "tech.muyan.platform:muyan-platform:$platformVersion"
+    implementation "tech.muyan.platform:platform:$platformVersion"
     implementation "tech.muyan.platform.plugin:ai-provider:$platformVersion"
     implementation "tech.muyan.platform.plugin:ai-assistant:$platformVersion"
     implementation "tech.muyan.platform.plugin:i18n-support:$platformVersion"
