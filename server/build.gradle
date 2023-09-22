@@ -19,7 +19,7 @@ apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
 
 // muyan platform version
-def platformVersion = '0.25.0'
+def platformVersion = '0.26.0-rc16'
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
@@ -91,6 +91,12 @@ dependencies {
     testImplementation "org.hibernate.validator:hibernate-validator:6.1.7.Final"
 
     implementation "tech.muyan.platform:muyan-platform:$platformVersion"
+    implementation "tech.muyan.platform.plugin:ai-provider:$platformVersion"
+    implementation "tech.muyan.platform.plugin:ai-assistant:$platformVersion"
+    implementation "tech.muyan.platform.plugin:i18n-support:$platformVersion"
+    implementation "tech.muyan.platform.plugin:dynamic-task:$platformVersion"
+    implementation "tech.muyan.platform.plugin:samples:$platformVersion"
+    implementation "tech.muyan.platform.plugin:dynamic-report:$platformVersion"
 
     //For quick file watch in development mode on macos
     //Change to developmentOnly after upgrade to gradle 7.2
