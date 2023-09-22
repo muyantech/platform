@@ -6,6 +6,16 @@ on: [push, pull_request]
 
 jobs:
 
+  cancel:
+    name: 'Cancel Previous Runs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          all_but_latest: true
+          access_token: ${{ github.token }}
+
   # Label of the container job
   build-and-upload-artifact:
     # Containers must run in Linux based operating systems
