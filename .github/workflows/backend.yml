@@ -69,11 +69,11 @@ jobs:
 
         run: |
           cd server
-          ./gradlew build
+          ./gradlew bootJar
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           # Artifact name
           name: server side application war file
           # Directory containing files to upload
-          path: server/build/libs/*.war
+          path: server/build/libs/*.jar
