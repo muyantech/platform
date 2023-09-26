@@ -1,0 +1,110 @@
+version: '3'
+services:
+
+    redis:
+        image: redis:latest
+        restart: always
+        ports:
+            - 6379:6379
+        healthcheck:
+            test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+        networks:
+            - scm
+
+    database:
+        image: postgres:15.2-alpine
+        restart: always
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=application
+        volumes:
+            - ./runtime/database/data:/var/lib/postgresql/data
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U postgres']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        ports:
+            - 5432:5432
+        networks:
+            - scm
+
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        restart: always
+        user: root
+        environment:
+            PGADMIN_DEFAULT_EMAIL: db@muyan.cloud
+            PGADMIN_DEFAULT_PASSWORD: secret
+            PGADMIN_LISTEN_PORT: 80
+            PGADMIN_SERVER_JSON_FILE: /pgadmin4/config/servers.json
+        ports:
+            - "5433:80"
+        volumes:
+            - ./runtime/pgadmin/data:/var/lib/pgadmin
+            - ./runtime/pgadmin/config:/pgadmin4/config
+            - ./runtime/pgadmin/log:/var/log/pgadmin
+            - ./runtime/pgadmin/pgpass:/var/lib/pgadmin/storage/db_muyan.cloud/pgpass
+        links:
+            - "database"
+        networks:
+            - scm
+
+    client:
+        image: muyantech/frontend:latest
+        restart: always
+        volumes:
+            - ./client/:/usr/share/nginx/html
+        ports:
+            - 3000:80
+        working_dir: /usr/share/nginx/html
+        stdin_open: true
+        networks:
+            - scm
+
+    server:
+        build:
+            context: ./server/
+            dockerfile: Dockerfile
+        restart: always
+        working_dir: /root/workspace
+        environment:
+            # 数据库连接地址信息
+            # Database connection
+            - JDBC_DATABASE_URL=jdbc:postgresql://database:5432/application
+            # 数据库用户名
+            # Database username
+            - JDBC_DATABASE_USERNAME=postgres
+            # 数据库密码
+            # Database password
+            - JDBC_DATABASE_PASSWORD=password
+            # 种子数据文件夹，需要挂载
+            # Seed data folder, need to be mounted
+            - SEED_DATA_FOLDER=/root/workspace/data
+            # Redis连接地址
+            # Redis connection
+            - REDIS_URL=redis://redis:6379
+        volumes:
+            # ATTENTION: the mount folder have to be named as muyan-platform
+            - ./server:/root/workspace
+            # 开发过程中上传的附件的保存路径
+            # The path to save the attachments uploaded during development
+            - ./runtime/attachments:/root/attachments
+
+        command: "tail -f /dev/null"
+        ports:
+            # 8080 is the default port for backend server
+            - 8080:8080
+            # 5005 is the default port for remote debugging
+            - 5005:5005
+        stdin_open: true
+        networks:
+            - scm
+
+networks:
+  scm:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
