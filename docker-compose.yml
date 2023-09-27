@@ -54,8 +54,6 @@ services:
     client:
         image: muyantech/frontend:latest
         restart: always
-        volumes:
-            - ./client/:/usr/share/nginx/html
         ports:
             - 3000:80
         working_dir: /usr/share/nginx/html
