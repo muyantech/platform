@@ -1,2 +1,2 @@
-name(*),parent.name,customiseEnable,tenant,subDomain
+name(*),parent.name,customiseEnable,tenant,subDomain(*)
 muyan,NULL,Y,muyan,muyan
