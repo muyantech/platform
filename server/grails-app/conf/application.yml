@@ -179,17 +179,10 @@ environments:
   # validate - Makes no changes to your database. Compares the configuration with the existing database schema and reports warnings.
 
   development:
+    gorm:
+      multiTenancy:
+        tenantResolverClass: org.grails.datastore.mapping.multitenancy.resolvers.SystemPropertyTenantResolver
     attachment:
-      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
-      storageEngine: ${STORAGE_ENGINE:LOCAL_FILE}
-      s3Compatible:
-        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
-        bucketName: muyan-cs-development-app
-        region: us-east-1
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      local:
-        folder: ${LOCAL_FILE_FOLDER:/tmp}
     seedData:
       folder: ${SEED_DATA_FOLDER:/tmp}
     dataSource:
@@ -220,18 +213,6 @@ environments:
       password: ${JDBC_TEST_DATABASE_PASSWORD:password}
 
   review:
-    attachment:
-      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
-      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      s3Compatible:
-        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
-        bucketName: muyan-cs-review-app
-        region: us-east-1
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      local:
-        folder: ${LOCAL_FILE_FOLDER:/tmp}
     seedData:
       folder: ${SEED_DATA_FOLDER:/app/data}
     dataSource:
@@ -245,18 +226,6 @@ environments:
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
   staging:
-    attachment:
-      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
-      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      s3Compatible:
-        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
-        bucketName: muyan-cs-staging-app
-        region: us-east-1
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      local:
-        folder: ${LOCAL_FILE_FOLDER:/tmp}
     seedData:
       folder: ${SEED_DATA_FOLDER:/app/data}
     dataSource:
@@ -270,18 +239,6 @@ environments:
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
   production:
-    attachment:
-      # 存储引擎: 当前支持: LOCAL_FILE 或者 S3_COMPATIBLE
-      storageEngine: ${STORAGE_ENGINE:S3_COMPATIBLE}
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      s3Compatible:
-        accessKey: ${S3_ACCESS_KEY:S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY:S3_SECRET_KEY}
-        bucketName: muyan-cs-production-app
-        region: us-east-1
-      # 本地存储引擎默认的存储路径是 `本处配置路径/tenantId/上载日期`
-      local:
-        folder: ${LOCAL_FILE_FOLDER:/tmp}
     seedData:
       folder: ${SEED_DATA_FOLDER:/app/data}
     dataSource:
