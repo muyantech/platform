@@ -108,6 +108,7 @@ dependencies {
 
 bootRun {
     systemProperties.put('boot.method', 'bootRun')
+    systemProperties.put('gorm.tenantId', 'muyan')
     ignoreExitValue true
     jvmArgs(
         '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005',
