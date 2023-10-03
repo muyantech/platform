@@ -1,1 +1,1 @@
-系统初始化所需要的 CSV 文件放在这里
+System bootstrap CSV files are placed here

@@ -20,6 +20,7 @@ apply plugin:"org.grails.plugins.views-json"
 
 // muyan platform version
 def platformVersion = '0.26.3'
+def platformVersion = '0.26.4'
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
@@ -138,7 +139,18 @@ tasks.withType(JavaCompile) {
 }
 
 bootJar {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  enabled = true
+  classifier = 'boot'
+  exclude "test/**"
+  exclude "test/**/**"
+  from('.') {
+    include 'data/**/*.csv'
+    include 'data/**/*.groovy'
+    include 'data/**/*.css'
+    include 'data/actions/*'
+    include 'data/attachments/*'
+  }
 }
 
 java {
