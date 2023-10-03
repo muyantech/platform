@@ -36,8 +36,6 @@
         {
           "plan": "heroku-postgresql:basic"
         },
-        "logtail:free",
-        "librato:development",
         "heroku-redis:mini"
       ],
       "env": {
