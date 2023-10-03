@@ -43,7 +43,7 @@
         "GRAILS_ENV": "review",
         "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss256k -Xmx768m",
         "PAAS_VENDOR": "heroku",
-        "SEED_DATA_FOLDER": "/app/server/data",
+        "SEED_DATA_FOLDER": "/app/server/data"
       }
     },
     "test": {
