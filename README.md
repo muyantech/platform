@@ -9,7 +9,7 @@ Directory structure:
  
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-For detail documentation, please check https://muyan.io and https://docs.muyan.tech/en/quickstart/
+For detail documentation, please check https://muyan.io and https://docs.muyan.io/en/quickstart/
 
 You can check https://muyan.io/#demo to check a live demo online
 
