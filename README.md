@@ -6,8 +6,10 @@ Directory structure:
 * runtime: runtime folder when running using docker compose
   - attachments : folder to save attachments
   - database : database and pgadmin persistent data folder
+ 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-For detail documentation, please check https://muyan.io
+For detail documentation, please check https://muyan.io and https://docs.muyan.tech/en/quickstart/
 
 You can check https://muyan.io/#demo to check a live demo online
 
