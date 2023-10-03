@@ -25,7 +25,7 @@
   "env": {  
       "GRADLE_TASK": "-Dgrails.env=review stage",
       "GRAILS_ENV": "review",
-      "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss256k -Xmx768m",
+      "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8",
       "PAAS_VENDOR": "heroku",
       "SEED_DATA_FOLDER": "/app/server/data"
   },
@@ -46,7 +46,7 @@
       "env": {
         "GRADLE_TASK": "-Dgrails.env=review stage",
         "GRAILS_ENV": "review",
-        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss256k -Xmx768m",
+        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8",
         "PAAS_VENDOR": "heroku",
         "SEED_DATA_FOLDER": "/app/server/data"
       }
