@@ -7,9 +7,6 @@
     },
     {
       "url": "https://github.com/muyantech/openj9-buildpack"
-    },
-    {
-      "url": "heroku-community/cli"
     }
   ],
   "addons": [
@@ -48,15 +45,7 @@
         "GRAILS_ENV": "review",
         "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss256k -Xmx768m",
         "PAAS_VENDOR": "heroku",
-        "ES_APM_ENABLE": false,
-        "S3_ACCESS_KEY": "<S3_ACCESS_KEY>",
-        "S3_SECRET_KEY": "<S3_SECRET_KEY>",
         "SEED_DATA_FOLDER": "/app/server/data",
-        "EM_ENABLE": true,
-        "EM_ACCESS_TOKEN": "<ELASTIC_IO_ACCESS_TOKEN>",
-      },
-      "scripts": {
-        "postdeploy": "export HEROKU_API_KEY=<HEROKU_API_KEY>; heroku redis:maxmemory --policy allkeys-lru --app $HEROKU_APP_NAME; heroku redis:timeout --seconds 60 --app $HEROKU_APP_NAME"
       }
     },
     "test": {
