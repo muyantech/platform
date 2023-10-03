@@ -18,6 +18,7 @@ printenv
 java \
     -Dgrails.env=$GRAILS_ENV \
     -Dserver.port=$PORT \
+    -Dgorm.tenantId=muyan \
     $JAVA_TOOL_OPTIONS \
     $JAVA_OPTS \
     -jar /app/boot.jar

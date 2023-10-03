@@ -25,7 +25,7 @@
   "env": {  
       "GRADLE_TASK": "-Dgrails.env=review stage",
       "GRAILS_ENV": "review",
-      "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8",
+      "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Dgorm.tenantId=muyan",
       "PAAS_VENDOR": "heroku",
       "SEED_DATA_FOLDER": "/app/server/data"
   },
@@ -46,14 +46,14 @@
       "env": {
         "GRADLE_TASK": "-Dgrails.env=review stage",
         "GRAILS_ENV": "review",
-        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8",
+        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Dgorm.tenantId=muyan",
         "PAAS_VENDOR": "heroku",
         "SEED_DATA_FOLDER": "/app/server/data"
       }
     },
     "test": {
       "env": {
-        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Xss512k"
+        "JAVA_TOOL_OPTIONS": "-XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -Dgorm.tenantId=muyan"
       },
       "addons": [
         "heroku-postgresql:in-dyno"

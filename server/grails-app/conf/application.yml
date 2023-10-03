@@ -213,6 +213,9 @@ environments:
       password: ${JDBC_TEST_DATABASE_PASSWORD:password}
 
   review:
+    gorm:
+      multiTenancy:
+        tenantResolverClass: org.grails.datastore.mapping.multitenancy.resolvers.SystemPropertyTenantResolver
     seedData:
       folder: ${SEED_DATA_FOLDER:/app/data}
     dataSource:
