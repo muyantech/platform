@@ -19,7 +19,7 @@ apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
 
 // muyan platform version
-def platformVersion = '0.26.5'
+def platformVersion = '0.26.6'
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
