@@ -16,6 +16,7 @@ fi
 printenv
 
 java \
+    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
     -Dgrails.env=$GRAILS_ENV \
     -Dserver.port=$PORT \
     -Dgorm.tenantId=muyan \
