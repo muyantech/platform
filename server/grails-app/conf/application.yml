@@ -14,23 +14,11 @@ grails:
   cors:
     enabled: true
     allowedOrigins:
-      - http://clokmpre.agileage.com
-      - http://clokmpre.agileage.com:3000
-      - http://clokmpre.boe.com.cn
-      - http://clokmpre.boe.com.cn:3000
       - http://muyan.agileage.com
-      - http://muyan.agileage.com:3000
-      - http://aecc.agileage.com
-      - http://aecc.agileage.com:3000
       - https://muyan.muyan.cloud
-      - https://aecc.muyan.cloud
-      - https://clokmpre.muyan.cloud
-      - http://clokmpre.tddage.com
-      - https://clokmpre.tddage.com
-      - http://aecc.tddage.com
-      - https://aecc.tddage.com
       - http://muyan.tddage.com
       - https://muyan.tddage.com
+      - http://localhost:3000
     allowCredentials: true
   profile: rest-api
   codegen:

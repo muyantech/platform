@@ -7,6 +7,9 @@
     },
     {
       "url": "https://github.com/muyantech/openj9-buildpack"
+    },
+    {
+      "url": "heroku-community/nginx"
     }
   ],
   "addons": [
