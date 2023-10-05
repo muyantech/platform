@@ -15,6 +15,7 @@ singleServerConfig:
   connectionPoolSize: 4
   database: 0
   dnsMonitoringInterval: 5000
+  sslEnableEndpointIdentification: false
 threads: 2
 nettyThreads: 2
 codec: !<org.redisson.codec.MarshallingCodec> {}
