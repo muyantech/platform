@@ -13,7 +13,8 @@
     {
       "plan": "heroku-postgresql:basic"
     },
-    "heroku-redis:premium-0"
+    "heroku-redis:premium-0",
+    "logtail:free"
   ],
   "formation": {
     "web": {
@@ -41,7 +42,8 @@
         {
           "plan": "heroku-postgresql:basic"
         },
-        "heroku-redis:premium-0"
+        "heroku-redis:premium-0",
+        "logtail:free"
       ],
       "env": {
         "GRADLE_TASK": "-Dgrails.env=review stage",
