@@ -182,7 +182,7 @@ environments:
       # dialect: org.hibernate.dialect.H2Dialect
       driverClassName: org.postgresql.Driver
       dialect: org.hibernate.dialect.PostgreSQLDialect
-      url: ${JDBC_DATABASE_URL:jdbc:postgresql://database:5432/<product_name>_dev}
+      url: ${JDBC_DATABASE_URL:jdbc:postgresql://database:5432/application}
       username: ${JDBC_DATABASE_USERNAME:postgres}
       password: ${JDBC_DATABASE_PASSWORD:password}
 
