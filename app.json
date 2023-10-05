@@ -41,7 +41,7 @@
         {
           "plan": "heroku-postgresql:basic"
         },
-        "heroku-redis:mini"
+        "heroku-redis:premium-0"
       ],
       "env": {
         "GRADLE_TASK": "-Dgrails.env=review stage",
