@@ -13,7 +13,7 @@
     {
       "plan": "heroku-postgresql:basic"
     },
-    "heroku-redis:mini"
+    "heroku-redis:premium-0"
   ],
   "formation": {
     "web": {
