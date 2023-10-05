@@ -6,7 +6,7 @@
       "url": "heroku/gradle"
     },
     {
-      "url": "https://github.com/muyantech/openj9-buildpack"
+      "url": "heroku/jvm"
     }
   ],
   "addons": [
