@@ -19,7 +19,7 @@ apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
 
 // muyan platform version
-def platformVersion = '0.26.7'
+def platformVersion = '0.26.8'
 
 repositories {
     maven { url "https://repo.grails.org/grails/core" }
@@ -144,11 +144,7 @@ bootJar {
   exclude "test/**"
   exclude "test/**/**"
   from('.') {
-    include 'data/**/*.csv'
-    include 'data/**/*.groovy'
-    include 'data/**/*.css'
-    include 'data/actions/*'
-    include 'data/attachments/*'
+    include 'data/**'
   }
 }
 
