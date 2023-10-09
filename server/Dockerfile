@@ -12,7 +12,7 @@ RUN mkdir /app
 RUN gradle bootJar --no-daemon --info --stacktrace --no-watch-fs
 
 # RUN mv -T $(ls build/libs/*.jar) /app/boot.jar
-RUN mv build/libs/server-0.1-boot.jar /app/boot.jar
+RUN mv build/libs/application-0.1-boot.jar /app/boot.jar
 
 # Build tools not needed on runtime image, just copy build artifact to runtime image
 FROM --platform=linux/x86_64 ibm-semeru-runtimes:open-11-jdk
