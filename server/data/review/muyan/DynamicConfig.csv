@@ -1,2 +1,0 @@
-name,key(*),value,parent.key,description,attachment,modifyRemark,displaySequence,allowPublicAccess,icon,isSystem
-本地引擎存储目录,attachment.local.folder,/root/attachments,attachment,"attachment local folder, effective only when attachment.storageEngine is LOCAL_FILE",NULL,,10,false,,true
