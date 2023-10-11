@@ -27,6 +27,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
   [pattern: '/actuator/health', filters: 'none'],
   [pattern: '/**/attachment/direct/**', filters: 'none'],
   [pattern: '/**/webhook/**', filters: 'none'],
+  [pattern: '/**/translations/**', filters: 'none'],
   [pattern: '/**', filters: 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'],
 
   //Traditional chain
