@@ -9,7 +9,7 @@ fi
 # /jdbc.sh will not work as the environment variable setted will not be
 # exposed to current script
 # https://stackoverflow.com/questions/496702/can-a-shell-script-set-environment-variables-of-the-calling-shell
-if [ $PAAS_VENDOR = 'heroku' ] || [ $PAAS_VENDOR = 'fly' ]; then
+if [ $PAAS_VENDOR = 'heroku' ] || [ $PAAS_VENDOR = 'fly' ] || [ $PAAS_VENDOR = 'dokku' ]; then
  . /jdbc.sh
 fi
 
