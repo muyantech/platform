@@ -88,7 +88,7 @@ services:
             - ./server:/root/workspace
             # 开发过程中上传的附件的保存路径
             # The path to save the attachments uploaded during development
-            - ./runtime/attachments:/root/attachments
+            - ./runtime/attachments:/app/attachments
 
         command: "tail -f /dev/null"
         ports:
